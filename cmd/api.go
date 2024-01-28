@@ -3,6 +3,7 @@ package cmd
 import (
 	"context"
 	"fmt"
+	"log"
 	"log/slog"
 	"os"
 	"strconv"
@@ -11,12 +12,15 @@ import (
 	"github.com/GermanPachec0/app-go/api"
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
+	"github.com/joho/godotenv"
 	"github.com/spf13/cobra"
 )
 
 func APICmd(ctx context.Context) *cobra.Command {
 	var port int
-
+	if err := godotenv.Load(); err != nil {
+		log.Fatal("Error loading .env file")
+	}
 	cmd := &cobra.Command{
 		Use:   "api",
 		Args:  cobra.ExactArgs(0),
@@ -56,12 +60,9 @@ func NewDatabasePool(ctx context.Context, maxConns int) (*pgxpool.Pool, error) {
 		maxConns = 1
 	}
 	url := fmt.Sprintf(
-		"%s?pool_max_conns=%d&pool_min_conns=%d",
-		os.Getenv("DATABASE_CONNECTION_POOL_URL"),
-		maxConns,
-		2,
+		"%s",
+		os.Getenv("DATABASE_CONNECTION_POOL_URL_2"),
 	)
-
 	config, err := pgxpool.ParseConfig(url)
 	if err != nil {
 		return nil, err

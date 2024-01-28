@@ -20,8 +20,7 @@ func NewAPI(ctx context.Context, pool *pgxpool.Pool) *APIServer {
 	userRepo := repository.NewPostgresUser(pool)
 
 	return &APIServer{
-		listenAddr: "8080",
-		userRepo:   userRepo,
+		userRepo: userRepo,
 	}
 }
 

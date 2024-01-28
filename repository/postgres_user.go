@@ -44,7 +44,7 @@ func (p *postgresUserRepository) fetch(ctx context.Context, query string, args .
 }
 
 func (p *postgresUserRepository) GetById(ctx context.Context, uuid uuid.UUID) (domain.User, error) {
-	query := `SELECT id, uuid, email, password, first_name, last_name, created_at,update_at from
+	query := `SELECT id, uuid, email, password, first_name, last_name, create_at,update_at from
 	users
 	where uuid = $1`
 	srs, err := p.fetch(ctx, query, uuid)
