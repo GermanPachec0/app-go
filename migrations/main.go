@@ -65,3 +65,13 @@ func main() {
 
 	fmt.Println("Multiple users inserted successfully!")
 }
+
+func alterTable(db *sql.DB) {
+	_, err := db.Exec(`ALTER TABLE users `)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println("Multiple users inserted successfully!")
+
+}
