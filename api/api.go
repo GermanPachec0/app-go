@@ -27,8 +27,8 @@ func NewAPI(ctx context.Context, pool *pgxpool.Pool) *APIServer {
 func (a *APIServer) Routes() *mux.Router {
 	r := mux.NewRouter()
 	r.HandleFunc("/v1/users/{uid}", a.getUserByIdHandler).Methods("GET")
-	r.HandleFunc("/v1/users", a.createUserHandler).Methods("POST")
-	r.HandleFunc("/v1/users", a.getUsersHandler).Methods("GET")
+	r.HandleFunc("/v1/users", a.isAdminMiddleware(a.createUserHandler)).Methods("POST")
+	r.HandleFunc("/v1/users", a.withJwtAuth(a.getUsersHandler)).Methods("GET")
 	r.HandleFunc("/v1/users/auth", a.handleLogin).Methods("POST")
 
 	return r
